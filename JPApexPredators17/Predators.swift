@@ -22,8 +22,7 @@ class Predators {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 apexPredators = try decoder.decode([ApexPredator].self, from: data)
             } catch {
-                print("Error decoding JSON Dara \(error)")
-                
+                print("Error decoding JSON data: \(error)")
             }
         }
     }
