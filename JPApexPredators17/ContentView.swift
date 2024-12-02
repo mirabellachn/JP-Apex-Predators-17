@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State var searchText = ""
     @State var alphabetical = false
+    @State var currentSelection = PredatorType.all
     
     let predators = Predators()
     
@@ -68,6 +69,18 @@ struct ContentView: View {
                                           value: alphabetical)
                         }
                     }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Picker("Filter", selection: $currentSelection) {
+                            ForEach (PredatorType.allCases) {
+                                type in
+                                Label(type.rawValue.capitalized, systemImage: type.icon)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "slider.horizontal.3")
+                    }
+                }
             }
         }
     .preferredColorScheme(.dark)
