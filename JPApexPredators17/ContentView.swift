@@ -15,6 +15,8 @@ struct ContentView: View {
     let predators = Predators()
     
     var filteredDinos: [ApexPredator] {
+        predators.filter(by: currentSelection)
+        
         predators.sort(by: alphabetical)
         
         return predators.search(for: searchText)
@@ -24,9 +26,7 @@ struct ContentView: View {
         NavigationStack {
             List(filteredDinos) { predator in
                 NavigationLink {
-                    Image(predator.image)
-                        .resizable()
-                        .scaledToFit()
+                    PredatorDetail()
                 } label: {
                     HStack {
                         // Dinosaur Image
@@ -71,7 +71,7 @@ struct ContentView: View {
                     }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Picker("Filter", selection: $currentSelection) {
+                        Picker("Filter", selection: $currentSelection.animation()) {
                             ForEach (PredatorType.allCases) {
                                 type in
                                 Label(type.rawValue.capitalized, systemImage: type.icon)
